@@ -12,7 +12,9 @@
 , withExamples ? true
 }:
 
-stdenv.mkDerivation {
+let
+  examplesOnOff = if withExamples then "ON" else "OFF";
+in stdenv.mkDerivation {
   name = "OpenHMD";
   allowSubstitutes = false;
   src = ./.;
