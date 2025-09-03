@@ -130,6 +130,6 @@ Note that this is *only* if you're linking statically! If you're using the DLL t
 A list of pre-built backages can be found on http://www.openhmd.net/index.php/download/
 
 ## Using OpenHMD
-See the examples/ subdirectory for usage examples. The OpenGL example is not built by default, to build it use the --enable-openglexample option for the configure script. It requires SDL2, glew and OpenGL.
+See the examples/ subdirectory for usage examples. The OpenGL example is not built by default, to build it use the --enable-openglexample option for the configure script. It requires SDL3, glew and OpenGL.
 
 An API reference can be generated using doxygen and is also available here: http://openhmd.net/doxygen/0.1.0/openhmd_8h.html

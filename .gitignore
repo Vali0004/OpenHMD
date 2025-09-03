@@ -1,6 +1,7 @@
 tests/simple/hmdtest
 tests/opengl/hmd-opengl
 tests/unittests/unittests
+result
 *.exe
 *.dll
 *.o

@@ -54,7 +54,7 @@ option(OPENHMD_DRIVER_EXTERNAL "External sensor driver" ON)
 option(OPENHMD_DRIVER_ANDROID "General Android driver" OFF)
 
 option(OPENHMD_EXAMPLE_SIMPLE "Simple test binary" ON)
-option(OPENHMD_EXAMPLE_SDL "SDL OpenGL test (outdated)" OFF)
+option(OPENHMD_EXAMPLE_SDL "SDL OpenGL test" ON)
 
 if(OPENHMD_DRIVER_OCULUS_RIFT)
   pkg_check_modules(libusb-1.0 REQUIRED libusb-1.0)
@@ -215,7 +215,7 @@ if (OPENHMD_EXAMPLE_SIMPLE)
 endif(OPENHMD_EXAMPLE_SIMPLE)
 
 if (OPENHMD_EXAMPLE_SDL)
-	find_package(SDL2 REQUIRED)
+	find_package(SDL3 REQUIRED)
 	find_package(GLEW REQUIRED)
 	find_package(OpenGL REQUIRED)
 	add_subdirectory(./examples/opengl)

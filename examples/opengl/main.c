@@ -9,6 +9,8 @@
 
 #include <openhmd.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <assert.h>
 #include <math.h>
 #include "gl.h"
@@ -183,7 +185,7 @@ int main(int argc, char** argv)
 	gl_ctx gl;
 	init_gl(&gl, hmd_w, hmd_h);
 
-	SDL_ShowCursor(SDL_DISABLE);
+	SDL_HideCursor();
 
 	const char* vertex;
 	ohmd_gets(OHMD_GLSL_DISTORTION_VERT_SRC, &vertex);
@@ -210,13 +212,13 @@ int main(int argc, char** argv)
 
 	bool done = false;
 	bool crosshair_overlay = false;
-	while(!done){
+	while (!done) {
 		ohmd_ctx_update(ctx);
 
 		SDL_Event event;
-		while(SDL_PollEvent(&event)){
-			if(event.type == SDL_KEYDOWN){
-				switch(event.key.keysym.sym){
+		while (SDL_PollEvent(&event)) {
+			if (event.type == SDL_EVENT_KEY_DOWN) {
+				switch (event.key.key) {
 				case SDLK_ESCAPE:
 					done = true;
 					break;
@@ -260,31 +262,31 @@ int main(int argc, char** argv)
 						printf("right_lens_center: [%0.4f, %0.4f]\n", right_lens_center[0], right_lens_center[1]);
 					}
 					break;
-				case SDLK_w:
+				case SDLK_W:
 					sep += 0.001;
 					left_lens_center[0] = viewport_scale[0] - sep/2.0f;
 					right_lens_center[0] = sep/2.0f;
 					break;
-				case SDLK_q:
+				case SDLK_Q:
 					sep -= 0.001;
 					left_lens_center[0] = viewport_scale[0] - sep/2.0f;
 					right_lens_center[0] = sep/2.0f;
 					break;
-				case SDLK_a:
+				case SDLK_A:
 					warp_adj *= 1.0/0.9;
 					break;
-				case SDLK_z:
+				case SDLK_Z:
 					warp_adj *= 0.9;
 					break;
-				case SDLK_i:
+				case SDLK_I:
 					ipd -= 0.001;
 					ohmd_device_setf(hmd, OHMD_EYE_IPD, &ipd);
 					break;
-				case SDLK_o:
+				case SDLK_O:
 					ipd += 0.001;
 					ohmd_device_setf(hmd, OHMD_EYE_IPD, &ipd);
 					break;
-				case SDLK_d:
+				case SDLK_D:
 					/* toggle between distorted and undistorted views */
 					if ((distortion_coeffs[0] != 0.0) ||
 							(distortion_coeffs[1] != 0.0) ||
@@ -298,7 +300,7 @@ int main(int argc, char** argv)
 						ohmd_device_getf(hmd, OHMD_UNIVERSAL_DISTORTION_K, &(distortion_coeffs[0]));
 					}
 					break;
-				case SDLK_x:
+				case SDLK_X:
 					crosshair_overlay = ! crosshair_overlay;
 					break;
 				default:

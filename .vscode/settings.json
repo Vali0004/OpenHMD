@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "openhmd.h": "c",
+        "gl.h": "c"
+    }
+}

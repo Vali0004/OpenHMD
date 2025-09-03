@@ -316,7 +316,7 @@ static hid_device* open_device_idx(int manufacturer, int product, int iface,
 	while (cur_dev) {
 		LOGI("%04x:%04x %s\n", manufacturer, product, cur_dev->path);
 
-		if(idx == device_index && iface == iface_cur){
+		if (findEndPoint(cur_dev->path, device_index) > 0 && iface == iface_cur) {
 			ret = hid_open_path(cur_dev->path);
 			LOGI("opening\n");
 		}

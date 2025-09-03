@@ -10,8 +10,6 @@
 #ifndef GL_H
 #define GL_H
 
-#include <SDL.h>
-
 #ifndef __APPLE__
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -19,6 +17,9 @@
 #include <OpenGL/gl.h>
 static inline void glewInit(void) {}
 #endif
+
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_opengl.h>
 
 typedef struct {
 	int w, h;

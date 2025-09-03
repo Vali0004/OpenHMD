@@ -28,13 +28,13 @@ addons:
       - libgl1-mesa-dev
       - libglew-dev
       - libhidapi-dev
-      - libsdl2-dev
+      - libsdl3-dev
       - ninja-build
   homebrew:
     packages:
       - glew
       - hidapi
-      - sdl2
+      - sdl3
       - ninja
     update: true
 

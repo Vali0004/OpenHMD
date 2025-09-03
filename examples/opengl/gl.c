@@ -9,6 +9,8 @@
 
 #include "gl.h"
 #include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <math.h>
 
 #ifdef __unix
@@ -24,19 +26,15 @@ void init_gl(gl_ctx* ctx, int w, int h)
 	memset(ctx, 0, sizeof(gl_ctx));
 
 	// == Initialize SDL ==
-	int ret = SDL_Init(SDL_INIT_EVERYTHING);
-	if(ret < 0){
+  	if (!SDL_Init(SDL_INIT_VIDEO)) {
 		printf("SDL_Init failed\n");
 		exit(-1);
 	}
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	ctx->window = SDL_CreateWindow("OpenHMD opengl example",
-			SDL_WINDOWPOS_UNDEFINED,
-			SDL_WINDOWPOS_UNDEFINED,
-			w, h, SDL_WINDOW_OPENGL );
-	if(ctx->window == NULL) {
+	ctx->window = SDL_CreateWindow("OpenHMD opengl example", w, h, SDL_WINDOW_OPENGL);
+	if (ctx->window == NULL) {
 		printf("SDL_CreateWindow failed\n");
 		exit(-1);
 	}

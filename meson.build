@@ -288,10 +288,10 @@ endif
 # OpenGL
 if _examples.contains('opengl')
 
-	dep_sdl2 = dependency('sdl2')
+	dep_sdl3 = dependency('sdl3')
 	dep_gl = dependency('gl')
 	dep_glew = dependency('glew')
-	deps = [dep_sdl2, dep_gl, dep_glew, dep_threads]
+	deps = [dep_sdl3, dep_gl, dep_glew, dep_threads]
 
 	opengl_sources = [
 		'examples/opengl/main.c',

@@ -8,19 +8,51 @@
 #ifndef OPENHMD_HID_H
 #define OPENHMD_HID_H
 
-static inline char* _hid_to_unix_path(char* path)
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+static inline char* _hid_to_unix_path(const char* path)
 {
-	char bus [5];
-	char dev [5];
-	char *result = malloc( sizeof(char) * ( 20 + 1 ) );
+    char* result = malloc(32);
+    if (!result)
+		return NULL;
 
-	sprintf (bus, "%.*s", 4, path);
-	sprintf (dev, "%.*s", 4, path + 5);
+    // Copy the bus number
+    int bus = 0;
+    if (sscanf(path, "%d-", &bus) != 1)
+		bus = 0;
 
-	sprintf (result, "/dev/bus/usb/%03d/%03d",
-		(int)strtol(bus, NULL, 16),
-		(int)strtol(dev, NULL, 16));
-	return result;
+    char sysfs_name[32];
+    strncpy(sysfs_name, path, sizeof(sysfs_name));
+    sysfs_name[sizeof(sysfs_name)-1] = 0;
+    char* colon = strchr(sysfs_name, ':');
+    if (colon)
+		*colon = '\0';
+
+    char devnum_path[64];
+    snprintf(devnum_path, sizeof(devnum_path),
+             "/sys/bus/usb/devices/%s/devnum", sysfs_name);
+
+    FILE* f = fopen(devnum_path, "r");
+    if (!f) {
+        perror(devnum_path);
+        free(result);
+        return NULL;
+    }
+
+    int devnum = 0;
+    if (fscanf(f, "%d", &devnum) != 1) {
+        perror("fscanf");
+        fclose(f);
+        free(result);
+        return NULL;
+    }
+    fclose(f);
+
+    // Construct /dev/bus/usb/<bus>/<devnum>
+    snprintf(result, 32, "/dev/bus/usb/%03d/%03d", bus, devnum);
+    return result;
 }
 
 #endif
